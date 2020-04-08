@@ -1,0 +1,1 @@
+./candy/build/assumptionTest -verb=2 6s33.cnf 
