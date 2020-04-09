@@ -26,6 +26,11 @@ int main(int argc, char **argv) {
 
     lbool result = solver->solve();
 
+    // Mimic behavior in ipasircandy.cc
+    // Leads to assertion error in ConflictAnalysis::analyze
+//    problem.clear();
+//    solver->init(problem);
+
     std::cout << "Adding assumption Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 0) }" << std::endl;
     assumption = Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 0) };
 
