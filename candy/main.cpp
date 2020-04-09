@@ -19,14 +19,14 @@ int main(int argc, char **argv) {
     CandySolverInterface *solver = createSolver();
     solver->init(problem);
 
-    std::cout << "Adding assumption Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 1) }\n" << std::endl;
+    std::cout << "Adding assumption Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 1) }" << std::endl;
     std::vector<Lit> assumption = Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 1) };
 
     solver->getAssignment().setAssumptions(assumption);
 
     lbool result = solver->solve();
 
-    std::cout << "Adding assumption Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 0) }\n" << std::endl;
+    std::cout << "Adding assumption Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 0) }" << std::endl;
     assumption = Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 0) };
 
     solver->getAssignment().setAssumptions(assumption);
