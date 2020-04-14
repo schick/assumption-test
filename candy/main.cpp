@@ -6,9 +6,6 @@
 using namespace Candy;
 
 int main(int argc, char **argv) {
-    // Parse params for candy solver
-    parseOptions(argc, argv, true);
-
     CNFProblem problem{};
 
     std::cout << "Reading Problem File: " << argv[1] << std::endl;
@@ -19,26 +16,27 @@ int main(int argc, char **argv) {
     CandySolverInterface *solver = createSolver();
     solver->init(problem);
 
-    std::cout << "Adding assumption Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 1) }" << std::endl;
-    std::vector<Lit> assumption = Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 1) };
+    std::cout << "Adding assumption Cl { 1837_L, ~1939_L, ~426_L, ~557_L, ~661_L }" << std::endl;
+    Cl assumptions1 = { 1837_L, ~1939_L, ~426_L, ~557_L, ~661_L };
 
-    solver->getAssignment().setAssumptions(assumption);
+    solver->getAssignment().setAssumptions(assumptions1);
 
     lbool result = solver->solve();
 
     // Mimic behavior in ipasircandy.cc
     // Leads to assertion error in ConflictAnalysis::analyze
-//    problem.clear();
-//    solver->init(problem);
+    problem.clear();
+    solver->init(problem);
 
-    std::cout << "Adding assumption Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 0) }" << std::endl;
-    assumption = Cl { Lit(1836, 0), Lit(1938, 1), Lit(425, 1), Lit(556, 1), Lit(660, 0) };
-
-    solver->getAssignment().setAssumptions(assumption);
+    std::cout << "Adding assumption Cl { 1837_L, ~1939_L, ~426_L, ~557_L, 661_L }" << std::endl;
+    Cl assumptions2 = { 1837_L, ~1939_L, ~426_L, ~557_L, 661_L };
+    solver->getAssignment().setAssumptions(assumptions2);
 
     result = solver->solve();
 
     printf(result == l_True ? "s SATISFIABLE\n" : result == l_False ? "s UNSATISFIABLE\n" : "s INDETERMINATE\n");
+
+    delete solver;
 
     return 0;
 }
